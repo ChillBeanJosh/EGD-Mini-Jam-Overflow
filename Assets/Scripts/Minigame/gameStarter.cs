@@ -10,6 +10,8 @@ public class gameStarter : MonoBehaviour
     public basicMovement player;
     public GameObject gameManager;
     public GameObject gameUI;
+
+    public inputReader inputReader;
     [Space]
 
     public LayerMask Table;
@@ -26,6 +28,19 @@ public class gameStarter : MonoBehaviour
 
         if (((1 << collision.gameObject.layer) & Table) != 0)
         {
+            //Table Information:
+            tableData table = collision.gameObject.GetComponent<tableData>();
+
+            if (table != null)
+            {
+                inputReader.stringAmount = table.SeatedClients;
+                inputReader.CreatePattern();
+            }
+            else
+            {
+                Debug.Log("There are NO CLIENTS IN THIS TABLE");
+            }
+
             //disable the player
             player.enabled = !player.enabled;
 

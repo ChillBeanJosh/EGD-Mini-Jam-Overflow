@@ -35,10 +35,13 @@ public class inputReader : MonoBehaviour
     public GameObject gameUI;
 
 
-    void Start()
+    private void Awake()
     {
         stringPattern = new List<string>();
 
+    }
+    void Start()
+    {
         CreatePattern();
     }
 
@@ -73,7 +76,6 @@ public class inputReader : MonoBehaviour
                     //If the user inputes the correct keycode:
                     if (keyPressed == requiredKeyString)
                     {
-                        score++;
                         Debug.Log("Correct Key Entered!!");
                         currentCharacterIndex++;
 
@@ -82,6 +84,7 @@ public class inputReader : MonoBehaviour
                         if (currentCharacterIndex >= currentPhrase.Length)
                         {
                             //Reset
+                            score++;
                             currentCharacterIndex = 0;
                             currentIndex++;
 
@@ -98,6 +101,7 @@ public class inputReader : MonoBehaviour
                     {
                         Debug.Log("WRONG INPUT KEY!! FAILED!!!");
                         StartCoroutine(DisableInputs());
+                        meter.currentValue = meter.currentValue + (5 * stringAmount);
                     }
 
                     break;
@@ -116,9 +120,22 @@ public class inputReader : MonoBehaviour
     }
 
 
-    void CreatePattern()
+    public void CreatePattern()
     {
+        if (stringPattern == null)
+        {
+            stringPattern = new List<string>();
+        }
+
         stringPattern.Clear();
+        currentIndex = 0;
+        currentCharacterIndex = 0;
+
+        if (possiblePhrases == null || possiblePhrases.Length == 0)
+        {
+            Debug.Log("NO PHRASES AVAILABLE!!!");
+            return;
+        }
 
         //CREATES A FOR LOOP IN WHICH BASED ON THE PATTERN LENGTH, CHOOSES A RANDOM KEYCODE FROM POSSIBLE INPUTS, THEN ADDS IT TO THE ARRAY OF THE INPUT PATTERN, REPEATS UNTIL PATTERN LENGTH IS REACHED.
         for (int i = 0; i < stringAmount; i++)
@@ -126,6 +143,8 @@ public class inputReader : MonoBehaviour
             string randomString = possiblePhrases[Random.Range(0, possiblePhrases.Length)];
             stringPattern.Add(randomString);
         }
+
+        Debug.Log("NEW LIST CREATED!!");
     }
 
 
