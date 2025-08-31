@@ -6,9 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/OutdoorsScene.unity
+    path: Assets/Scenes/MainMenu.unity
+    guid: eb93316fe3dfe4fbf930d75688dca0bb
+  - enabled: 1
+    path: Assets/Scenes/GamePlay.unity
+    guid: b121425d8d91844c6b15f596cbd5fc23
+  - enabled: 1
+    path: Assets/Scenes/WinScreen.unity
+    guid: dd77dee2838d44d73a769d70203c5d33
+  - enabled: 1
+    path: Assets/Scenes/LoseScreen.unity
+    guid: 5533d5325976641769af64190a5edd1c
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: ca44af56be987fc4795a0b3a45caf99c
+  - enabled: 1
+    path: Assets/test.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
   m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53,
-      type: 3}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -31,6 +31,14 @@ public class overflowBar : MonoBehaviour
         StartCoroutine(IncreaseMeter());
     }
 
+    private void Update()
+    {
+        if (currentValue == maxValue)
+        {
+            scenesManager.Instance.LoadScene(scenesManager.Scene.LoseScreen);
+        }
+    }
+
     private IEnumerator IncreaseMeter()
     {
         while (true)

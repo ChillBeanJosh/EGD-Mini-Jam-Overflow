@@ -18,7 +18,9 @@ public class scenesManager : MonoBehaviour
         MainMenu,
         GamePlay,
         WinScreen,
-        LoseScreen
+        LoseScreen,
+        Tutorial,
+        test
     }
 
 
