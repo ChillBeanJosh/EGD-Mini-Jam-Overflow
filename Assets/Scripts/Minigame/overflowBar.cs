@@ -35,7 +35,7 @@ public class overflowBar : MonoBehaviour
 
     private void Update()
     {
-        if (currentValue == maxValue)
+        if (currentValue >= maxValue)
         {
             inputGame.score = (inputGame.score / 2);
             timer.UpdateHighestScore();
