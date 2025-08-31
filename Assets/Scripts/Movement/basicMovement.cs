@@ -34,12 +34,21 @@ public class basicMovement : MonoBehaviour
 
     Rigidbody rb;
 
+
+    [Header("Ice Control")]
+    private Coroutine iceCoroutine;
+    private float defaultGroundDrag;
+    public float iceSlipTime;
+    public overflowBar meter;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
         readyToJump = true;
+
+        defaultGroundDrag = groundDrag;
     }
 
     private void Update()
@@ -116,5 +125,27 @@ public class basicMovement : MonoBehaviour
         readyToJump = true;
     }
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ice"))
+        {
+            if (iceCoroutine != null)
+            {
+                StopCoroutine(iceCoroutine);
+            }
+
+            iceCoroutine = StartCoroutine(SetIceDragForSeconds(iceSlipTime)); 
+        }
+    }
+
+    private IEnumerator SetIceDragForSeconds(float duration)
+    {
+        meter.currentValue = meter.currentValue + 10;
+        groundDrag = 1f;
+        yield return new WaitForSeconds(duration);
+        groundDrag = defaultGroundDrag;
+        iceCoroutine = null;
+    }
 
 }

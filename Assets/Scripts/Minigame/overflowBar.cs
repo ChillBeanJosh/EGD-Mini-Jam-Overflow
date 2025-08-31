@@ -8,12 +8,16 @@ public class overflowBar : MonoBehaviour
     [Header("Meter Settings")]
     public float currentValue = 0f;    
     public float maxValue = 100f;      
-    public float increaseRate = 2.5f;     
+    public float increaseRate = 2.5f;
+    public float increaseInterval = 1f;
+    public float increaseAmount = 0.01f;
+    private float timeSinceLastInterval;
     [Space]
 
     [Header("References")]
     public inputReader inputGame;     
     public Slider meterSlider;
+    public timerManager timer;
     [Space]
 
     [Header("Scoring Settings")]
@@ -27,34 +31,31 @@ public class overflowBar : MonoBehaviour
             meterSlider.maxValue = maxValue;
             meterSlider.value = currentValue;
         }
-
-        StartCoroutine(IncreaseMeter());
     }
 
     private void Update()
     {
         if (currentValue == maxValue)
         {
+            inputGame.score = (inputGame.score / 2);
+            timer.UpdateHighestScore();
+
             scenesManager.Instance.LoadScene(scenesManager.Scene.LoseScreen);
         }
-    }
-
-    private IEnumerator IncreaseMeter()
-    {
-        while (true)
+        else if(currentValue < maxValue)
         {
-            yield return new WaitForSeconds(1f);
-
-            currentValue += increaseRate;
-            currentValue = Mathf.Clamp(currentValue, 0f, maxValue);
-
-            UpdateUI();
-
-            if (currentValue >= maxValue)
-            {
-                Debug.Log("GAME OVER!!!!");
-            }
+            currentValue += increaseRate * Time.deltaTime;
+            meterSlider.value = currentValue;
         }
+
+
+        timeSinceLastInterval += Time.deltaTime;
+        if (timeSinceLastInterval >= increaseInterval)
+        {
+            increaseRate += increaseAmount;
+            timeSinceLastInterval = 0f;
+        }
+        
     }
 
     public void OnPatternCompleted()
