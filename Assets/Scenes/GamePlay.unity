@@ -1472,6 +1472,10 @@ PrefabInstance:
       propertyPath: meter
       value: 
       objectReference: {fileID: 1729628210}
+    - target: {fileID: 809136366687296912, guid: 0b0b6e70e5c029f4ab91f804011f14f0, type: 3}
+      propertyPath: iceSlipTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2819764818761096422, guid: 0b0b6e70e5c029f4ab91f804011f14f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
