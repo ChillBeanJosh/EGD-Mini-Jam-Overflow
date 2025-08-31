@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class inputReader : MonoBehaviour
 {
-
+    [Header("Possible Phrase Lists:")]
     public string[] possiblePhrases;
     public List<string> StringPattern { get { return stringPattern; } }
     private List<string> stringPattern;
+    [Space]
 
-    [Header("# Of Clients At The Table")]
+    [Header("# Of Clients At The Table:")]
     public int stringAmount;
 
 
@@ -21,13 +22,18 @@ public class inputReader : MonoBehaviour
     public int CurrentCharacterIndex { get { return currentCharacterIndex; } }
     private int currentCharacterIndex = 0;
 
-
+    [Header("General Variables:")]
     public float score; 
     public float waitTime; //float used for the amount of seconds of delay when putting the wrong input.
 
     private bool canInput = true; //bool toggle when an input is messed up working alongside the waitTime.
 
+    [Header("Refrences:")]
     public overflowBar meter;
+    public basicMovement player;
+    public GameObject gameManager;
+    public GameObject gameUI;
+
 
     void Start()
     {
@@ -84,8 +90,7 @@ public class inputReader : MonoBehaviour
                             if (currentIndex >= stringPattern.Count)
                             {
                                 meter.OnPatternCompleted();
-                                currentIndex = 0;
-                                CreatePattern();
+                                ExitMinigame();
                             }
                         }
                     }
@@ -107,11 +112,7 @@ public class inputReader : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         canInput = true;
 
-        
-        currentIndex = 0;
-        currentCharacterIndex = 0;
-        CreatePattern();
-       
+        ExitMinigame();
     }
 
 
@@ -126,6 +127,18 @@ public class inputReader : MonoBehaviour
             stringPattern.Add(randomString);
         }
     }
-    
+
+
+    void ExitMinigame()
+    {
+        currentIndex = 0;
+        currentCharacterIndex = 0;
+
+        player.enabled = true;
+
+        gameUI.SetActive(false);
+        gameManager.SetActive(false);
+    }
+
 
 }
