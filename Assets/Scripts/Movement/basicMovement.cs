@@ -40,6 +40,8 @@ public class basicMovement : MonoBehaviour
     private float defaultGroundDrag;
     public float iceSlipTime;
     public overflowBar meter;
+    private Vector3 lockedMoveDirection;
+    private bool isSliding = false;
 
     private void Start()
     {
@@ -73,6 +75,8 @@ public class basicMovement : MonoBehaviour
 
     private void MyInput()
     {
+        if (isSliding) return;
+
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -141,10 +145,19 @@ public class basicMovement : MonoBehaviour
 
     private IEnumerator SetIceDragForSeconds(float duration)
     {
+        //lock direction:
+        lockedMoveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        isSliding = true;
+
+        //slidey movement:
         meter.currentValue = meter.currentValue + 10;
         groundDrag = 1f;
+
         yield return new WaitForSeconds(duration);
+
+        //return to default:
         groundDrag = defaultGroundDrag;
+        isSliding = false;
         iceCoroutine = null;
     }
 
