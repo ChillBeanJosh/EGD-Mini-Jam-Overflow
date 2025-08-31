@@ -122,3 +122,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SeatedClients: 3
+  ChanceWeight: 1.3

@@ -34,6 +34,11 @@ public class gameStarter : MonoBehaviour
             if (table != null)
             {
                 inputReader.stringAmount = table.SeatedClients;
+
+                inputReader.currentTableSpawner = table.ownerSpawner;
+                inputReader.currentTableObject = table.gameObject;
+                table.ownerSpawner.StartMinigame();
+
                 inputReader.CreatePattern();
             }
             else
