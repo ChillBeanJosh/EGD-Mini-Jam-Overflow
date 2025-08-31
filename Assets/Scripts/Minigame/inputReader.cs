@@ -34,6 +34,11 @@ public class inputReader : MonoBehaviour
     public GameObject gameManager;
     public GameObject gameUI;
 
+    [Header("Current Table References")]
+    public tableSpawner currentTableSpawner;  
+    public GameObject currentTableObject;
+    public tableSpawner tableSpawner;
+
 
     private void Awake()
     {
@@ -150,14 +155,24 @@ public class inputReader : MonoBehaviour
 
     void ExitMinigame()
     {
+        bool success = currentIndex >= stringPattern.Count;
+
+        if (currentTableSpawner != null && currentTableObject != null)
+        {
+            currentTableSpawner.OnTableCompleted(success, currentTableObject);
+            currentTableSpawner.EndMinigame();
+        }
+       
+
         currentIndex = 0;
         currentCharacterIndex = 0;
 
         player.enabled = true;
-
         gameUI.SetActive(false);
+
+        currentTableSpawner = null;
+        currentTableObject = null;
+
         gameManager.SetActive(false);
     }
-
-
 }
